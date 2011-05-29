@@ -31,7 +31,6 @@ setopt listtypes
 unsetopt flowcontrol
 unsetopt beep
 
-bindkey -e
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 bindkey '^[[Z' reverse-menu-complete
@@ -100,6 +99,7 @@ alias psh='aptitude show'
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
+alias vi='vim'
 alias e='gvim --remote-tab-silent'
 
 alias -g ack='ack-grep'
@@ -108,6 +108,7 @@ alias -g L='| less'
 
 alias sz='source ~/.zshrc'
 alias ez='e ~/.zshrc'
+alias ev='e ~/.vimrc'
 
 alias sshr="ssh -p $srp $sr"
 
@@ -130,7 +131,7 @@ precmd() {
     export LD_PRELOAD=''
 
     # send a visual bell to awesome
-    echo -ne '\a'
+    #echo -ne '\a'
 
     # set cwd in terminals
     case $TERM in
@@ -156,11 +157,11 @@ preexec () {
     esac
 
     # automatically use proxychains for git, bzr, and ssh
-    case $first in
-        git|bzr|ssh)
-            export LD_PRELOAD=libproxychains.so.3
-            ;;
-    esac
+    #case $first in
+        #git|bzr|ssh)
+            #export LD_PRELOAD=libproxychains.so.3
+            #;;
+    #esac
 }
 
 # Set default working directory of tmux to the given directory; use the current
@@ -205,4 +206,4 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then source "$HOME/.rvm/scripts/rvm" ; fi
 . $HOME/.zsh/z/z.sh
 
 # Rooter; https://github.com/yeban/rooter.sh
-. $HOME/.zsh/rooter/rooter.sh
+. $HOME/.zsh/rooter.sh/rooter.sh
