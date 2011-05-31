@@ -115,6 +115,9 @@ alias sshr="ssh -p $srp $sr"
 alias entertain='mplayer "$(find "." -type f -regextype posix-egrep -regex ".*\.(avi|mkv|flv|mpg|mpeg|mp4|wmv|3gp|mov|divx)" | shuf -n1)"'
 alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 
+alias mirosubs="source mirosubs"
+alias venv="source venv"
+
 ### Exports
 export PKG_CONFIG_PATH=/home/yeban/opt/lib/pkgconfig/:${PKG_CONFIG_PATH}
 
@@ -127,7 +130,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 s() { find . -iname "*$@*" }
 
 precmd() {
-    # reset LD_PRELOAD that might have been set in preexec()
+    # reset LD_PRELOAD khat might have been set in preexec()
     export LD_PRELOAD=''
 
     # send a visual bell to awesome
