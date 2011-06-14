@@ -133,6 +133,7 @@ export PATH=$PATH:/$HOME/opt/ncbi-blast/bin
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 s() { find . -iname "*$@*" }
+sg() { find . -iname "*$1*" | xargs grep "$2"}
 
 precmd() {
     # reset LD_PRELOAD khat might have been set in preexec()
