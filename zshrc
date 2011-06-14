@@ -31,6 +31,8 @@ setopt listtypes
 unsetopt flowcontrol
 unsetopt beep
 
+# vim bindings
+bindkey -v
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 bindkey '^[[Z' reverse-menu-complete
@@ -109,6 +111,9 @@ alias -g L='| less'
 alias sz='source ~/.zshrc'
 alias ez='e ~/.zshrc'
 alias ev='e ~/.vimrc'
+#A pad to dump arbit data
+alias ed='e /home/rohan/workspace/trash/dumppad.md'
+
 
 alias sshr="ssh -p $srp $sr"
 
