@@ -3,6 +3,7 @@ fpath=(~/.zsh/Completion $fpath)
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
+EC2='175.41.162.239'
 
 # zsh options; man zshoptions
 setopt sharehistory
@@ -114,6 +115,9 @@ alias ev='e ~/.vimrc'
 #A pad to dump arbit data
 alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
+#Launch ec2 account
+alias ec2='ssh $EC2'
+
 
 alias sshr="ssh -p $srp $sr"
 
@@ -123,13 +127,16 @@ alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock 
 alias mirosubs="source mirosubs"
 alias venv="source venv"
 
+#Tell tmux 256 color support
+alias tmux="tmux -2"
+
 ### Exports
+export JAVA_HOME=/usr
 export PKG_CONFIG_PATH=/home/yeban/opt/lib/pkgconfig/:${PKG_CONFIG_PATH}
+export PATH=$PATH:/opt/src/go/bin
+export GOROOT=:/opt/src/go
 
 export PYTHONSTARTUP=$HOME/.pythonrc
-export RSENSE_HOME=/home/yeban/opt/rsense-0.3
-export PATH=$PATH:/$HOME/opt/ncbi-blast/bin
-
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 s() { find . -iname "*$@*" }
@@ -142,6 +149,40 @@ sg() {
         echo 'Input the file and grep patterns'
     fi
 }
+
+# if using GNU screen, let the zsh tell screen what the title and hardstatus
+# of the tab window should be.
+if [[ $TERM == "screen"* ]]; then
+  _GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^~$USER/~/"'
+
+  # use the current user as the prefix of the current tab title
+  TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR "'
+  # when at the shell prompt, show a truncated version of the current path (with
+  # standard ~ replacement) as the rest of the title.
+  TAB_TITLE_PROMPT='$SHELL:t'
+  # when running a command, show the title of the command as the rest of the
+  # title (truncate to drop the path to the command)
+  TAB_TITLE_EXEC='$cmd[1]:t'
+  # use the current path (with standard ~ replacement) in square brackets as the
+  # prefix of the tab window hardstatus.
+  TAB_HARDSTATUS_PREFIX='"[`'$_GET_PATH'`] "'
+  # when at the shell prompt, use the shell name (truncated to remove the path to
+  # the shell) as the rest of the title
+  TAB_HARDSTATUS_PROMPT='$SHELL:t'
+  # when running a command, show the command name and arguments as the rest of
+  # the title
+  TAB_HARDSTATUS_EXEC='$cmd'
+
+  # tell GNU screen what the tab window title ($1) and the hardstatus($2) should be
+  function screen_set()
+  {
+    # set the tab window title (%t) for screen
+    print -nR $'\033k'$1$'\033'\\\
+
+    # set hardstatus of tab window (%h) for screen
+    print -nR $'\033]0;'$2$'\a'
+  }
+fi
 
 precmd() {
     # reset LD_PRELOAD khat might have been set in preexec()
@@ -159,6 +200,13 @@ precmd() {
 
     # for autojump
     z --add "$(pwd -P)"
+
+    # Set the window title for screen
+    if [[ $TERM == "screen"* ]]; then
+        eval "tab_title=$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
+        eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
+        screen_set $tab_title $tab_hardstatus
+    fi
 }
 
 preexec () {
@@ -179,6 +227,15 @@ preexec () {
             #export LD_PRELOAD=libproxychains.so.3
             #;;
     #esac
+
+    # Set the window title for screen
+    if [[ $TERM == "screen"* ]]; then
+        local -a cmd; cmd=(${(z)1}) # the command string
+        eval "tab_title=$TAB_TITLE_PREFIX$TAB_TITLE_EXEC"
+        eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_EXEC"
+        screen_set $tab_title $tab_hardstatus
+    fi
+
 }
 
 # Set default working directory of tmux to the given directory; use the current
@@ -194,6 +251,11 @@ cdt(){
         echo "tcd: no such directory: ${dir}"
         return 1
     fi
+}
+
+# Open a duplicate screen window
+dup() {
+    screen -c "cd \"$PWD\" && exec $SHELL --login"
 }
 
 # Automatically append a / after ..
@@ -224,3 +286,5 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
 # Rooter; https://github.com/yeban/rooter.sh
 . $HOME/.zsh/rooter.sh/rooter.sh
+
+. $HOME/.ec2/setup.sh
