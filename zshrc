@@ -90,12 +90,13 @@ alias l='ls -G --color'
 
 alias info='info --vi-keys'
 
-alias pi='sudo aptitude install'
-alias pr='sudo aptitude remove'
-alias pp='sudo aptitude purge'
+alias pi='sudo apt-metalink install'
+alias pr='sudo apt-metalink remove'
+alias pp='sudo apt-metalink purge'
 alias pud='sudo aptitude update'
 alias pug='sudo aptitude safe-upgrade'
-alias pufg='sudo aptitude full-upgrade'
+alias pugf='sudo aptitude full-upgrade'
+alias pugd='sudo apt-metalink dist-upgrade'
 alias pse='aptitude search'
 alias psh='aptitude show'
 
@@ -117,7 +118,7 @@ alias ev='e ~/.vimrc'
 alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
 #Launch ec2 account
-alias ec2='pc ssh $EC2'
+alias ec2='proxychains ssh $EC2'
 
 alias pip='pip $@ --proxy="$http_proxy"'
 
