@@ -3,7 +3,7 @@ fpath=(~/.zsh/Completion $fpath)
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
-EC2='175.41.162.239'
+EC2='ecc.rohanjain.in'
 
 # zsh options; man zshoptions
 setopt sharehistory
@@ -102,13 +102,14 @@ alias psh='aptitude show'
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
-alias vi='vim'
 alias e='gvim --remote-tab-silent'
 
 alias -g ack='ack-grep'
 alias -g G='| grep'
 alias -g L='| less'
 
+alias p='pstr paste'
+alias pc='proxychains'
 alias sz='source ~/.zshrc'
 alias ez='e ~/.zshrc'
 alias ev='e ~/.vimrc'
@@ -116,35 +117,37 @@ alias ev='e ~/.vimrc'
 alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
 #Launch ec2 account
-alias ec2='ssh $EC2'
+alias ec2='pc ssh $EC2'
 
+alias pip='pip $@ --proxy="$http_proxy"'
 
-alias sshr="ssh -p $srp $sr"
 
 alias entertain='mplayer "$(find "." -type f -regextype posix-egrep -regex ".*\.(avi|mkv|flv|mpg|mpeg|mp4|wmv|3gp|mov|divx)" | shuf -n1)"'
 alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 
-alias mirosubs="source mirosubs"
+alias mirosubs="source /home/rohan/workspace/python/mirosubs/env/bin/activate"
 alias venv="source venv"
 
 #Tell tmux 256 color support
 alias tmux="tmux -2"
 
 ### Exports
+export EDITOR=vim
 export JAVA_HOME=/usr
 export PKG_CONFIG_PATH=/home/yeban/opt/lib/pkgconfig/:${PKG_CONFIG_PATH}
-export PATH=$PATH:/opt/src/go/bin
+export PATH=$PATH:/opt/src/go/bin:$HOME/bin
 export GOROOT=:/opt/src/go
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
+export http_proxy=http://144.16.192.216:8080/
 
 s() { find . -iname "*$@*" }
 
 #Search for text in files
 sg() {
     if [ $# -gt 1 ];then
-        find . -iname "*$1*" | xargs grep "$2"
+        find . -iname "$1" | xargs grep "$2"
     else
         echo 'Input the file and grep patterns'
     fi
@@ -221,12 +224,12 @@ preexec () {
             ;;
     esac
 
-    # automatically use proxychains for git, bzr, and ssh
-    #case $first in
-        #git|bzr|ssh)
-            #export LD_PRELOAD=libproxychains.so.3
-            #;;
-    #esac
+    # automatically use proxychains for some programs
+    case $first in
+        alpine|mutt|git|svn)
+            export LD_PRELOAD=libproxychains.so.3
+            ;;
+    esac
 
     # Set the window title for screen
     if [[ $TERM == "screen"* ]]; then
