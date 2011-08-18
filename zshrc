@@ -91,10 +91,10 @@ alias l='ls -G --color'
 alias info='info --vi-keys'
 
 alias pi='sudo apt-metalink install'
-alias pr='sudo apt-metalink remove'
-alias pp='sudo apt-metalink purge'
+alias pr='sudo aptitude remove'
+alias pp='sudo aptitude purge'
 alias pud='sudo aptitude update'
-alias pug='sudo aptitude safe-upgrade'
+alias pug='sudo apt-metalink upgrade'
 alias pugf='sudo aptitude full-upgrade'
 alias pugd='sudo apt-metalink dist-upgrade'
 alias pse='aptitude search'
@@ -103,7 +103,7 @@ alias psh='aptitude show'
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
-alias e='gvim --remote-tab-silent'
+alias e='vi'
 
 alias -g ack='ack-grep'
 alias -g G='| grep'
@@ -142,6 +142,7 @@ export GOROOT=:/opt/src/go
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
 export http_proxy=http://144.16.192.216:8080/
+export no_proxy='localhost, 127.0.0.1'
 
 s() { find . -iname "*$@*" }
 
