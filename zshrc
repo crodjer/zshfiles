@@ -95,8 +95,7 @@ alias pr='sudo aptitude remove'
 alias pp='sudo aptitude purge'
 alias pud='sudo aptitude update'
 alias pug='sudo apt-metalink upgrade'
-alias pugf='sudo aptitude full-upgrade'
-alias pugd='sudo apt-metalink dist-upgrade'
+alias pugf='sudo apt-metalink dist-upgrade'
 alias pse='aptitude search'
 alias psh='aptitude show'
 
@@ -142,7 +141,7 @@ export GOROOT=:/opt/src/go
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
 export http_proxy=http://144.16.192.216:8080/
-export no_proxy='localhost, 127.0.0.1'
+export no_proxy='127.0.0.1'
 
 s() { find . -iname "*$@*" }
 
