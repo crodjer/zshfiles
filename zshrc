@@ -117,7 +117,7 @@ alias ev='e ~/.vimrc'
 alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
 #Launch ec2 account
-alias ec2='proxychains ssh $EC2'
+alias ec2='ssh $EC2'
 
 alias pip='pip $@ --proxy="$http_proxy"'
 
@@ -170,14 +170,15 @@ if [[ $TERM == "screen"* ]]; then
   # use the current path (with standard ~ replacement) in square brackets as the
   # prefix of the tab window hardstatus.
   TAB_HARDSTATUS_PREFIX='"[`'$_GET_PATH'`] "'
-  # when at the shell prompt, use the shell name (truncated to remove the path to
-  # the shell) as the rest of the title
+  # when at the shell prompt, use the shell name (truncated to remove the path
+  # to the shell) as the rest of the title
   TAB_HARDSTATUS_PROMPT='$SHELL:t'
   # when running a command, show the command name and arguments as the rest of
   # the title
   TAB_HARDSTATUS_EXEC='$cmd'
 
-  # tell GNU screen what the tab window title ($1) and the hardstatus($2) should be
+  # tell GNU screen what the tab window title ($1) and the hardstatus($2)
+  # should be
   function screen_set()
   {
     # set the tab window title (%t) for screen
@@ -227,7 +228,7 @@ preexec () {
 
     # automatically use proxychains for some programs
     case $first in
-        alpine|mutt|git|svn)
+        alpine|mutt|svn)
             export LD_PRELOAD=libproxychains.so.3
             ;;
     esac
