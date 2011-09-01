@@ -101,6 +101,7 @@ alias psh='aptitude show'
 
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
+alias hibernate='sudo /etc/acpi/hibernate.sh'
 
 alias e='vi'
 
@@ -140,7 +141,7 @@ export GOROOT=:/opt/src/go
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
-export http_proxy=http://144.16.192.216:8080/
+export http_proxy=http://144.16.192.213:8080/
 export no_proxy='127.0.0.1'
 
 s() { find . -iname "*$@*" }
@@ -229,7 +230,7 @@ preexec () {
     # automatically use proxychains for some programs
     case $first in
         alpine|mutt|svn)
-            export LD_PRELOAD=libproxychains.so.3
+            export LD_PRELOAD=/usr/lib/libtsocks.so
             ;;
     esac
 
