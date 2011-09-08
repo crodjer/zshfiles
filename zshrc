@@ -101,9 +101,11 @@ alias psh='aptitude show'
 
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
-alias hibernate='sudo /etc/acpi/hibernate.sh'
+#Save session to disk and bind caps as escape on resume
+alias hibernate='sudo s2disk'
 
-alias e='vi'
+#alias e='vi'
+alias e='gvim --remote-tab-silent'
 
 alias -g ack='ack-grep'
 alias -g G='| grep'
@@ -141,7 +143,7 @@ export GOROOT=:/opt/src/go
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
-export http_proxy=http://144.16.192.213:8080/
+export http_proxy=http://10.3.100.211:8080/
 export no_proxy='127.0.0.1'
 
 s() { find . -iname "*$@*" }
@@ -229,7 +231,7 @@ preexec () {
 
     # automatically use proxychains for some programs
     case $first in
-        alpine|mutt|svn)
+        alpine|mutt)
             export LD_PRELOAD=/usr/lib/libtsocks.so
             ;;
     esac
