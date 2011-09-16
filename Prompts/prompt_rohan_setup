@@ -14,7 +14,7 @@ EOF
 prompt_rohan_setup () {
 
 COL_1=${1:-white}
-COL_2=${2:-cyan}
+COL_2=${2:-green}
 COL_3=${3:-$COL_1}
 
 export PROMPT="%F{$COL_3}%n@%m%f%F{$COL_1}%(!.#.>)%f "
