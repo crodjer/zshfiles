@@ -119,6 +119,12 @@ alias ev='e ~/.vimrc'
 #A pad to dump arbit data
 alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
+#Music player shortcuts
+alias m="mpc"
+alias mtog="mpc toggle"
+alias mvol="mpc volume"
+alias sose="mpc playlist | grep -in"
+
 #Launch ec2 account
 alias ec2='ssh $EC2'
 
@@ -131,20 +137,21 @@ alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock 
 alias mirosubs="source /home/rohan/workspace/python/mirosubs/env/bin/activate"
 alias venv="source venv"
 
-#Tell tmux 256 color support
-alias tmux="tmux -2"
-
 ### Exports
 export EDITOR=vim
 export JAVA_HOME=/usr
-export PKG_CONFIG_PATH=/home/yeban/opt/lib/pkgconfig/:${PKG_CONFIG_PATH}
+#export PKG_CONFIG_PATH=/home/yeban/opt/lib/pkgconfig/:${PKG_CONFIG_PATH}
 export PATH=$PATH:/opt/src/go/bin:$HOME/bin
 export GOROOT=:/opt/src/go
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
-export http_proxy=http://10.3.100.211:8080/
+#export http_proxy=http://10.3.100.211:8080/
+export http_proxy=http://144.16.192.213:8080/
+export https_proxy=$http_proxy
 export no_proxy='127.0.0.1'
+
+export PIDGIN_DB=~/workspace/src/pidgin/db/pidgin.mtn
 
 s() { find . -iname "*$@*" }
 
@@ -159,6 +166,7 @@ sg() {
 
 # if using GNU screen, let the zsh tell screen what the title and hardstatus
 # of the tab window should be.
+# set mail_check = 10
 if [[ $TERM == "screen"* ]]; then
   _GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^~$USER/~/"'
 
