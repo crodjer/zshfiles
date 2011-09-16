@@ -1,0 +1,30 @@
+prompt_rohan_help () {
+  cat <<'EOF'
+This prompt is color-scheme-able.  You can invoke it thus:
+
+  prompt rohan [<color1> [<color2>]]
+
+where the color 1 and 2 are for left and right hand prompts.
+
+This prompt was stolen from Colin Walters <rohan@debian.org>,
+who gives credit to Michel Daenzer <daenzer@debian.org>.
+EOF
+}
+
+prompt_rohan_setup () {
+
+
+if [[ "$USER" != "root" ]]; then
+    PROMPT_SYMBOL=">"
+else
+    PROMPT_SYMBOL="#"
+fi
+export PROMPT="%F{${1:-gree}$PROMPT_SYMBOL%f "
+if [[ "$TERM" != "dumb" ]]; then
+    export RPROMPT="%F{${2:-magenta}}%~%f %b%n@%m"
+fi
+
+  prompt_opts=(cr percent)
+}
+
+prompt_rohan_setup "$@"

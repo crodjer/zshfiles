@@ -1,4 +1,5 @@
 fpath=(~/.zsh/Completion $fpath)
+fpath=(~/.zsh/Prompts $fpath)
 
 HISTFILE=~/.histfile
 HISTSIZE=5000
@@ -74,7 +75,7 @@ compinit
 # Initialize prompt
 autoload -Uz promptinit
 promptinit
-prompt adam2
+prompt rohan
 
 #PS1="%~$ "
 #export MOZ_NO_REMOTE=1
