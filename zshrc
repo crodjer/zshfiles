@@ -91,7 +91,7 @@ alias l='ls -G --color'
 
 alias info='info --vi-keys'
 
-alias pi='sudo apt-metalink install'
+alias pi='sudo aptitude install'
 alias pr='sudo aptitude remove'
 alias pp='sudo aptitude purge'
 alias pud='sudo aptitude update'
@@ -103,10 +103,14 @@ alias psh='aptitude show'
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 #Save session to disk and bind caps as escape on resume
-alias hibernate='sudo s2disk'
+alias s2disk='sudo s2disk'
+
+alias mnt='udisks --mount'
+alias umnt='udisks --unmount'
 
 #alias e='vi'
 alias e='gvim --remote-tab-silent'
+alias t='python ~/workspace/src/t/t.py --task-dir ~/ --list .tasks --delete-if-empty'
 
 alias -g ack='ack-grep'
 alias -g G='| grep'
@@ -122,9 +126,25 @@ alias ed='e /home/rohan/workspace/trash/dumppad.md'
 
 #Music player shortcuts
 alias m="mpc"
+alias mstatus="mpc -f '%artist% - %title%\n%album%' status"
 alias mtog="mpc toggle"
-alias mvol="mpc volume"
+#Search song from playlist and also get the song #
 alias sose="mpc playlist | grep -in"
+
+# Alters the mpd volume according to the sign and factor of 5
+function _alter_mpd_vol(){
+    num=$( echo "5*${2:-1}" | bc)
+    mpc volume $1$num
+}
+
+#Increase Vol
+function mup(){
+    _alter_mpd_vol "+" $1
+}
+#Decrease Vol
+function mdw(){
+    _alter_mpd_vol "-" $1
+}
 
 #Launch ec2 account
 alias ec2='ssh $EC2'
@@ -149,10 +169,12 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
 #export http_proxy=http://10.3.100.211:8080/
 export http_proxy=http://144.16.192.213:8080/
+export http_proxy=""
 export https_proxy=$http_proxy
 export no_proxy='127.0.0.1'
 
-export PIDGIN_DB=~/workspace/src/pidgin/db/pidgin.mtn
+export PIDGIN_DB=~/workspace/src/trash/pidgin.mtn
+export PIDGIN_DIR=~/workspace/src/pidgin/
 
 s() { find . -iname "*$@*" }
 
@@ -216,7 +238,7 @@ precmd() {
     esac
 
     # for autojump
-    z --add "$(pwd -P)"
+    _z --add "$(pwd -P)"
 
     # Set the window title for screen
     if [[ $TERM == "screen"* ]]; then
@@ -240,7 +262,7 @@ preexec () {
 
     # automatically use proxychains for some programs
     case $first in
-        alpine|mutt)
+        alpine)
             export LD_PRELOAD=/usr/lib/libtsocks.so
             ;;
     esac
@@ -300,6 +322,7 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
 # Auto jump; https://github.com/sjl/z-zsh
 . $HOME/.zsh/z/z.sh
+. /usr/share/autojump/autojump.sh
 
 # Rooter; https://github.com/yeban/rooter.sh
 . $HOME/.zsh/rooter.sh/rooter.sh
