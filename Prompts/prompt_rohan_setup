@@ -2,7 +2,7 @@ prompt_rohan_help () {
   cat <<'EOF'
 This prompt is color-scheme-able.  You can invoke it thus:
 
-  prompt rohan [<color1> [<color2>] [<color3>]]
+  prompt rohan [<color1> [<color2>] [<color3>] [<color4>]]
 
 where the colors are for left hand prompt, working dir and username color.
 
@@ -15,11 +15,18 @@ prompt_rohan_setup () {
 
 COL_1=${1:-white}
 COL_2=${2:-green}
-COL_3=${3:-$COL_1}
+COL_3=${3:-yellow}
+COL_4=${3:-cyan}
 
-export PROMPT="%F{$COL_3}%n@%m%f%F{$COL_1}%(!.#.>)%f "
+# The environmental info
+ENV=%F{$COL_3}[%n@%m]%f--%F{$COL_3}(%T)%f
+DIR=%F{$COL_2}%~%f
+PROMPT_INPUT="%F{$COL_1}%(!.#.>)%f "
+
+export PS1="$ENV
+$PROMPT_INPUT"
 if [[ "$TERM" != "dumb" ]]; then
-    export RPROMPT="%F{$COL_2}%~%f"
+    export RPROMPT="$DIR"
 fi
 
   prompt_opts=(cr percent)
