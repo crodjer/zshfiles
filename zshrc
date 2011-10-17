@@ -169,9 +169,9 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 export _JAVA_AWT_WM_NONREPARENTING=1
 #export http_proxy=http://10.3.100.211:8080/
 export http_proxy=http://144.16.192.213:8080/
-export http_proxy=""
 export https_proxy=$http_proxy
-export no_proxy='127.0.0.1'
+export auto_proxy=file:///home/rohan/.proxy.pac
+export no_proxy='127.0.0.1,localhost'
 
 export PIDGIN_DB=~/workspace/src/trash/pidgin.mtn
 export PIDGIN_DIR=~/workspace/src/pidgin/
@@ -262,7 +262,7 @@ preexec () {
 
     # automatically use proxychains for some programs
     case $first in
-        alpine)
+        alpine|mutt)
             export LD_PRELOAD=/usr/lib/libtsocks.so
             ;;
     esac
